@@ -67,9 +67,10 @@ ComplementaryFilterROS::ComplementaryFilterROS()
                 "/imu/steady_state", queue_size);
         }
     }
-
     // Register IMU raw data subscriber.
-    imu_subscriber_.reset(new ImuSubscriber(this, "/imu/data_raw"));
+    rmw_qos_profile_t qos = rmw_qos_profile_sensor_data;
+    imu_subscriber_.reset(new ImuSubscriber(this, "/imu/data_raw", qos));
+    // imu_subscriber_.reset(new ImuSubscriber(this, "/imu/data_raw"));
 
     // Register magnetic data subscriber.
     if (use_mag_)
